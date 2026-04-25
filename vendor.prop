@@ -32,7 +32,11 @@ ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
 ro.surface_flinger.has_wide_color_display=true
 ro.surface_flinger.protected_contents=true
 ro.surface_flinger.supports_background_blur=1
-ro.surface_flinger.uclamp.min=120
+ro.surface_flinger.uclamp.min=328
+debug.sf.set_binder_thread_rt=1
+ro.surface_flinger.set_idle_timer_ms=1500
+ro.surface_flinger.set_touch_timer_ms=200
+ro.surface_flinger.set_display_power_timer_ms=1000
 # Use AutoSingleLayer so window transitions wait for ready buffers.
 debug.sf.auto_latch_unsignaled=0
 debug.sf.disable_backpressure=0
