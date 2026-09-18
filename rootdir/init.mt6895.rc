@@ -1,0 +1,133 @@
+import /vendor/etc/init/hw/init.mtkgki.rc
+import /vendor/etc/init/hw/init.mt6895.usb.rc
+import /vendor/etc/init/hw/init.connectivity.rc
+import /vendor/etc/init/hw/init.sensor_2_0.rc
+import /vendor/etc/init/hw/init.batterysecret.rc
+import /vendor/etc/init/hw/init.mi_thermald.rc
+import /vendor/etc/init/hw/init.cgroup.rc
+import /vendor/etc/init/hw/init.project.rc
+import /vendor/etc/init/hw/init.fingerprint.rc
+import /vendor/etc/init/hw/init.mt6895.power.rc
+
+on init
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller "11201000.usb0"
+    setprop persist.sys.usb.config adb
+    setprop sys.usb.config adb
+    setprop persist.vendor.fingerprint.type udfps_optical
+
+    # Change lk_env permission
+    chown root system /proc/lk_env
+    chmod 0660 /proc/lk_env
+
+    # Increase sysctl_rmem_max and sysctl_wmem_max values to 8M
+    write /proc/sys/net/core/wmem_max 8388608
+    write /proc/sys/net/core/rmem_max 8388608
+
+# Mount the non-latemount vendor filesystems before services consume them.
+on fs
+    mount_all --early
+    write /mnt/vendor/persist/aristotle_boot_stage "fs-mounted-${ro.build.version.incremental}"
+
+on post-fs
+    write /mnt/vendor/persist/aristotle_boot_stage "post-fs-${ro.build.version.incremental}"
+
+    # Mount stock Stagefright Foundation for MediaTek C2 decoders
+    mount none /vendor/lib64/libstagefright_foundation_stock.so /vendor/lib64/libstagefright_foundation.so bind
+    mount none /vendor/lib/libstagefright_foundation_stock.so /vendor/lib/libstagefright_foundation.so bind
+
+    # Change permissions for mediaserver
+    chown root media /proc/clkmgr/mipi_test
+
+    # Persist directory structure
+    mkdir /mnt/vendor/persist/sensors 0755 system system
+    mkdir /mnt/vendor/persist/camera 0755 system cameraserver
+    mkdir /mnt/vendor/persist/audio 0755 system system
+    mkdir /mnt/vendor/persist/haptics 0755 system system
+
+    # Protect partitions permissions
+    chown system system /mnt/vendor/protect_f
+    chmod 0770 /mnt/vendor/protect_f
+
+    chown system system /mnt/vendor/protect_s
+    chmod 0770 /mnt/vendor/protect_s
+
+# Mount userdata and other entries marked latemount.
+on late-fs
+    mount_all --late
+    write /mnt/vendor/persist/aristotle_boot_stage "late-fs-${ro.build.version.incremental}"
+
+on post-fs-data
+    # Keep framework/HAL startup behind the stock vendor module loader. The
+    # loader always raises this property after processing modules.load, even
+    # when an individual optional module cannot be inserted.
+    wait_for_prop vendor.all.modules.ready 1
+    write /mnt/vendor/persist/aristotle_boot_stage "post-fs-data-${ro.build.version.incremental}"
+
+    # NVRAM & NVCFG permissions
+    chown system system /mnt/vendor/nvcfg
+    chmod 0771 /mnt/vendor/nvcfg
+    restorecon_recursive /mnt/vendor/nvcfg
+    chown system system /mnt/vendor/nvcfg/fg
+    chown system system /mnt/vendor/nvcfg/fg/old_fg_data
+    chown system system /mnt/vendor/nvcfg/fg/car_tune_value
+
+    chown root system /mnt/vendor/nvdata
+    chmod 0771 /mnt/vendor/nvdata
+    mkdir /mnt/vendor/nvdata/media 0771 media audio
+
+    # Sensor calibration & dev nodes
+    mkdir /data/vendor/sensor 0774 system system
+    chmod 0660 /dev/hf_manager
+    chown system system /dev/hf_manager
+
+    # Widevine DRM dev node
+    chmod 0660 /dev/drm_wv
+    chown media media /dev/drm_wv
+
+    # Audio DSP dev nodes
+    chmod 0660 /dev/adsp
+    chown root media /dev/adsp
+    chmod 0440 /dev/adsp_0
+    chown system media /dev/adsp_0
+    chmod 0440 /dev/adsp_1
+    chown system media /dev/adsp_1
+
+    # HOS2 camera HAL writes its bandwidth vote after vendor modules are loaded.
+    chown media media /sys/devices/platform/soc/soc:interconnect/mmqos_hrt/camera_max_bw
+    chmod 0660 /sys/devices/platform/soc/soc:interconnect/mmqos_hrt/camera_max_bw
+
+    # Camera calibration & runtime directories
+    mkdir /data/vendor/camera 0771 root system
+    mkdir /data/vendor/camera/offlinelog 0777 cameraserver audio
+    mkdir /data/vendor/flash 0771 root system
+    mkdir /data/vendor/shading 0771 root system
+    mkdir /data/vendor/shading_otp 0771 root system
+    mkdir /data/vendor/camera_dump 0771 root system
+    chmod 0666 /dev/camlog
+
+# Disable AOSP rild; MediaTek uses mtkfusionrild
+service vendor.ril-daemon /vendor/bin/hw/rild
+    override
+    disabled
+
+# Disable deprecated HIDL bluetooth 1.1; MediaTek uses AIDL bluetooth service
+service bluetooth-1-1 /vendor/bin/hw/android.hardware.bluetooth@1.1-service-mediatek
+    override
+    disabled
+
+service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
+    override
+    class hal
+    user audioserver
+    # media gid needed for /dev/fm (radio) and for /data/misc/media (tee)
+    group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct wakelock context_hub system sdcard_rw
+    capabilities BLOCK_SUSPEND SYS_NICE
+    # setting RLIMIT_RTPRIO allows binder RT priority inheritance
+    rlimit rtprio 10 10
+    ioprio rt 4
+    task_profiles ProcessCapacityHigh HighPerformance
+    socket audio_hw_socket seqpacket 0666 system system
+    onrestart restart audioserver
+
+

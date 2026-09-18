@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: Apache-2.0
+cc_library_shared {
+    name: "libnetd_close_range_compat",
+    srcs: ["close_range.cpp"],
+    system_ext_specific: true,
+    compile_multilib: "64",
+    stl: "none",
+    cflags: ["-Wall", "-Werror"],
+    init_rc: ["netd-compat.rc"],
+}

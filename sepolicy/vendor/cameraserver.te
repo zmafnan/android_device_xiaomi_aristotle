@@ -1,0 +1,2 @@
+# CameraService reads the device-specific Xiaomi client list.
+get_prop(cameraserver, vendor_aristotle_camera_clients_prop)

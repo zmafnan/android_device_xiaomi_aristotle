@@ -1,0 +1,18 @@
+type camera_persist_file, file_type;
+type vendor_camera_data_file, data_file_type, file_type;
+
+r_dir_file(mtk_hal_camera, camera_persist_file)
+
+rw_dir_file(mtk_hal_camera, vendor_camera_data_file)
+rw_dir_file(mtk_hal_camera, sysfs_therm)
+
+allow mtk_hal_camera camera_persist_file:file r_file_perms;
+allow mtk_hal_camera vendor_camera_data_file:file rw_file_perms;
+
+# Allow camera HAL to find Xiaomi BGService (vendor.xiaomi.hardware.bgservice@1.0)
+# and MTK BGService (vendor.mediatek.hardware.camera.bgservice@1.1)
+# needed by libcom.xiaomi.mizone.so MiAlgoCamMode::algoEngineRequestLoop
+allow mtk_hal_camera mtk_hal_bgs_hwservice:hwservice_manager find;
+
+# Allow camera HAL to write to offlinelog dir under /data/vendor/camera
+allow mtk_hal_camera vendor_camera_data_file:dir w_dir_perms;

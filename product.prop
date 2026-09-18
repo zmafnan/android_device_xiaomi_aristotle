@@ -1,0 +1,57 @@
+# Xiaomi 13T Android 16 properties (product.prop)
+# Hardware Baseline: HyperOS 2 / MT6895 (Dimensity 8200 Ultra)
+# Organized modularly by subsystem for clean maintenance.
+
+# -----------------------------------------------------------------------------
+# Device identity
+# Keep the spaced model name in a property file, not a Make word list.
+# -----------------------------------------------------------------------------
+ro.product.marketname=Xiaomi 13T
+
+# -----------------------------------------------------------------------------
+# Security & Encryption
+# -----------------------------------------------------------------------------
+ro.crypto.metadata_init_delete_all_keys.enabled=false
+
+# -----------------------------------------------------------------------------
+# Bluetooth Profiles
+# -----------------------------------------------------------------------------
+bluetooth.profile.asha.central.enabled=true
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
+bluetooth.profile.bap.broadcast.assist.enabled=false
+bluetooth.profile.bap.unicast.client.enabled=false
+bluetooth.profile.bap.broadcast.source.enabled=false
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.ccp.server.enabled=false
+bluetooth.profile.csip.set_coordinator.enabled=false
+bluetooth.profile.gatt.enabled=true
+bluetooth.profile.hap.client.enabled=false
+bluetooth.profile.hfp.ag.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.mcp.server.enabled=false
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.vcp.controller.enabled=false
+
+# -----------------------------------------------------------------------------
+# UI, Display & SurfaceFlinger
+# -----------------------------------------------------------------------------
+persist.sys.sf_charge_anim_supported=true
+persist.sys.disable_sdr_dimming=true
+persist.sys.background_blur_supported=true
+
+# -----------------------------------------------------------------------------
+# Camera & Google Lens Integration
+# -----------------------------------------------------------------------------
+ro.product.camera.livephoto.support=3
+ro.com.google.ime.system_lm_dir=product/usr/share/ime/google/d3_lms/
+ro.com.google.lens.oem_camera_package=com.android.camera
+ro.com.google.lens.oem_image_package=com.google.android.apps.photos
+# -----------------------------------------------------------------------------
+# Storage & Filesystem Performance
+# -----------------------------------------------------------------------------
+persist.fsck.disable_linear_lookup=on
+persist.sys.fuse.passthrough.enable=true

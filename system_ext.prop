@@ -1,0 +1,5 @@
+# Xiaomi 13T Android 16 properties (system_ext.prop)
+# Hardware Baseline: HyperOS 2 / MT6895 (Dimensity 8200 Ultra)
+
+# Media Hardware Thumbnail Acceleration
+media.stagefright.thumbnail.prefer_hw_codecs=true

@@ -1,0 +1,8 @@
+type vendor_hal_touchfeature_default, domain;
+type vendor_hal_touchfeature_default_exec, exec_type, file_type, vendor_file_type;
+
+init_daemon_domain(vendor_hal_touchfeature_default)
+binder_use(vendor_hal_touchfeature_default)
+add_service(vendor_hal_touchfeature_default, vendor_hal_touchfeature_service)
+
+allow vendor_hal_touchfeature_default vendor_touchfeature_device:chr_file rw_file_perms;

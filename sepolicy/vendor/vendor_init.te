@@ -1,0 +1,7 @@
+set_prop(vendor_init, vendor_batterysecret_prop)
+set_prop(vendor_init, vendor_fingerprint_prop)
+set_prop(vendor_init, vendor_sensors_prop)
+
+rw_dir_file(vendor_init, sysfs_leds)
+
+set_prop(vendor_init, vendor_aristotle_camera_clients_prop)

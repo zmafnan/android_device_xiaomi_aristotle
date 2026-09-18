@@ -1,0 +1,123 @@
+# Xiaomi 13T Android 16 properties (odm.prop)
+# Hardware Baseline: HyperOS 2 / MT6895 (Dimensity 8200 Ultra)
+# Organized modularly by subsystem for clean maintenance.
+
+# -----------------------------------------------------------------------------
+# Battery & Smart Charging
+# -----------------------------------------------------------------------------
+persist.vendor.night.charge=true
+persist.vendor.battery.health=true
+persist.vendor.hightemp.notice=true
+persist.vendor.domain.charge=true
+persist.vendor.smartchg=6
+
+# -----------------------------------------------------------------------------
+# Display, Refresh Rate & SurfaceFlinger (144Hz OLED)
+# -----------------------------------------------------------------------------
+ro.vendor.display.type=oled
+vendor.display.default_resolution=1220,2712
+ro.vendor.display.default_fps=60
+ro.vendor.fps.switch.default=true
+ro.vendor.fps.switch.thermal=true
+ro.vendor.disable_idle_fps.threshold=837
+ro.vendor.idle_fps=60
+ro.vendor.display.tp_idle_fps=60
+ro.vendor.display.touch.idle.enable=true
+ro.vendor.display.video_or_camera_fps.support=true
+ro.vendor.display.ultimate.perf.support=true
+ro.vendor.display.framemaster.enable=true
+ro.vendor.display.uiservice.enable=false
+ro.vendor.display.uiservice_track.enable=false
+ro.vendor.display.uiservice_vidle.enable=false
+ro.vendor.display.jarvisservice.enable=false
+ro.vendor.display.fod_monitor_default_fps=120
+ro.vendor.display.heartrate_lockfps_support=true
+ro.vendor.display.dynamic_pu.enable=true
+ro.vendor.display.enable_unlock_insert_black_frame=true
+ro.vendor.display.frame_capture_manager.enable=false
+ro.vendor.display.mode_change_optimize.enable=true
+ro.vendor.mi_sf.144fps_duration_enable=true
+ro.vendor.mi_sf.OD_support=1
+ro.vendor.mi_sf.disable_OD.threshold=4243
+
+# -----------------------------------------------------------------------------
+# Display Color, HDR & Backlight Enhancement
+# -----------------------------------------------------------------------------
+ro.vendor.whitepoint_calibration_enable=false
+ro.vendor.colorpick_adjust=true
+ro.vendor.all_modes.colorpick_adjust=true
+ro.vendor.xiaomi.bl.poll=true
+ro.vendor.bcbc.enable=true
+ro.vendor.cabc.enable=false
+ro.vendor.hbm_backlight.enable=true
+ro.vendor.localhbm.enable=true
+persist.vendor.dc_backlight.enable=false
+ro.vendor.display.all_modes_support_WCG.enable=true
+ro.vendor.display.max_hdr_luminance=1000
+ro.vendor.display.dolbyvision.support=true
+ro.vendor.display.gamehdr_qualitypriority.enable=true
+ro.vendor.display.update_gray_by_temperature=true
+vendor.display.force_tonemapping=1
+vendor.displayfeature.entry.enable=true
+ro.vendor.gcp.enable=true
+ro.vendor.sre.enable=false
+ro.vendor.histogram.enable=1
+ro.vendor.mi_sf.mi_cine_look.enable=true
+ro.vendor.mi_sf.enable_peak_hdr=true
+ro.vendor.mi_sf.p3_wcg=true
+ro.vendor.mi_sf.gallery_p3_dolby_opt=false
+ro.vendor.mi_sf.support_source_p3_ProjectionScreen=true
+ro.vendor.mi_sf.support_source_hdr_ProjectionScreen=true
+ro.vendor.mi_sf.gpu_hdr_virtual_display.enable=true
+ro.vendor.mi_sf.pq_thermal=true
+ro.vendor.mi_sf.disable_temp=39
+ro.vendor.mi_sf.enable_temp=37
+ro.vendor.mi_sf.hdr_enable_flatmode=true
+
+# -----------------------------------------------------------------------------
+# Video Enhancements & Picture Quality (PQ)
+# -----------------------------------------------------------------------------
+ro.vendor.standard.video.enable=true
+ro.vendor.video_box.version=2
+ro.vendor.media.video.style.support=true
+ro.vendor.sdr2hdr.by.layer.support=true
+ro.vendor.regionpq.by.layer.support=false
+ro.vendor.mtk.pq.aidl=false
+ro.vendor.mtk.pq.odm=true
+ro.vendor.mtk.pq.silky.brightness.enable=true
+
+# -----------------------------------------------------------------------------
+# NFC & Secure Element (NXP SN110T)
+# -----------------------------------------------------------------------------
+ro.vendor.se.type=eSE,HCE,UICC
+ro.vendor.se.chip.model=SN110T
+ro.vendor.se.info=19-1010212
+ro.vendor.nfc.disable.i2c=false
+ro.vendor.nfc.repair=1
+ro.vendor.nfc.dispatch_optim=2
+ro.vendor.nfc.aclog=0
+ro.vendor.nfc.debounce_field_on=1
+ro.vendor.nfc.field_on_debounce=800
+ro.vendor.nfc.enable.osu=true
+ro.vendor.nfc.ipass=1
+ro.vendor.nfc.mitouch=1
+
+# -----------------------------------------------------------------------------
+# Audio Effects & Dolby Spatializer
+# -----------------------------------------------------------------------------
+ro.vendor.soundtrigger.dfs.support=1
+vendor.audio.useXiaomiSpatializer=false
+persist.vendor.audio.effectimplenter=dolby
+persist.vendor.audio.cinema.support=true
+ro.vendor.audio.fweffect=true
+
+# -----------------------------------------------------------------------------
+# Sensors, Biometrics & Radio
+# -----------------------------------------------------------------------------
+persist.vendor.sensor.mischeck=true
+persist.vendor.tracking.dfs=false
+persist.vendor.radio.dynamic_sar=1
+persist.vendor.debug.collision.dfx=false
+persist.vendor.sys.fp.dump_data=0
+ro.hardware.fp.mievent=true
+ro.vendor.s2_reboot_time=11

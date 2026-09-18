@@ -1,0 +1,1 @@
+bpf.hyperos_progs_loaded        u:object_r:bpf_progs_loaded_prop:s0 exact bool

@@ -1,0 +1,6 @@
+binder_call(platform_app, hal_mlipay_default)
+
+allow platform_app hal_mlipay_hwservice:hwservice_manager find;
+
+# Allow platform app (including camera) to find Xiaomi BGService
+allow platform_app mtk_hal_bgs_hwservice:hwservice_manager find;

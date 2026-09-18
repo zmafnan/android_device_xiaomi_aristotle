@@ -1,0 +1,5 @@
+# The HOS2 USB HAL reaches the controller through /sys/class/udc/<controller>.
+# New platform genfs labels give the class directory and link sysfs_udc;
+# the controller target remains sysfs_usb_nonplat with existing HAL access.
+allow mtk_hal_usb sysfs_udc:dir search;
+allow mtk_hal_usb sysfs_udc:lnk_file read;

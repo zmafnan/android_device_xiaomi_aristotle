@@ -1,0 +1,23 @@
+type vendor_fingerprint_sysfs, sysfs_type, fs_type;
+type vendor_fpsensor_socket, file_type;
+type vendor_hal_fingerprint_hwservice_xiaomi, hwservice_manager_type;
+
+add_hwservice(hal_fingerprint_default, vendor_hal_fingerprint_hwservice_xiaomi)
+
+get_prop(hal_fingerprint_default, vendor_fingerprint_prop)
+set_prop(hal_fingerprint_default, vendor_fingerprint_prop)
+
+allow hal_fingerprint_default vendor_touchfeature_device:chr_file rw_file_perms;
+allow hal_fingerprint_default vendor_displayfeature_device:chr_file rw_file_perms;
+
+allow hal_fingerprint_default vendor_hal_touchfeature_service:service_manager find;
+binder_call(hal_fingerprint_default, vendor_hal_touchfeature_default)
+binder_call(vendor_hal_touchfeature_default, hal_fingerprint_default)
+
+allow hal_fingerprint_default vendor_fingerprint_sysfs:file rw_file_perms;
+
+allow hal_fingerprint_default self:capability { sys_nice };
+
+allow hal_fingerprint_default sysfs_wakeup:file rw_file_perms;
+
+allow init vendor_fpsensor_socket:sock_file create_file_perms;

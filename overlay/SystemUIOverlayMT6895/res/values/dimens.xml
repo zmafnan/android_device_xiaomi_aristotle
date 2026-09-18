@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Location on the screen of the center of the fingerprint sensor. -->
+    <dimen name="physical_fingerprint_sensor_center_screen_location_x">610px</dimen>
+    <dimen name="physical_fingerprint_sensor_center_screen_location_y">2444px</dimen>
+
+    <!-- Location on the screen of the center of the physical power button. -->
+    <dimen name="physical_power_button_center_screen_location_y">1175px</dimen>
+
+    <!-- Microns/ums (1000 um = 1mm) per pixel for the given device (Xiaomi 13T: 6.67" 1220x2712). -->
+    <item name="pixel_pitch" format="float" type="dimen">52.92</item>
+
+    <!-- UDFPS animation offset to align custom unlock animation center with sensor center (sensorRadius = 105px) -->
+    <dimen name="udfps_animation_offset">105px</dimen>
+
+    <!-- Default paddings for content around the corners (insets battery and notif icons away from screen edges) -->
+    <dimen name="rounded_corner_content_padding">68px</dimen>
+
+    <!-- The padding on the top of the statusbar (usually 0) -->
+    <dimen name="status_bar_padding_top">14px</dimen>
+</resources>

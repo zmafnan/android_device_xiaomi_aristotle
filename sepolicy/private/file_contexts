@@ -1,0 +1,1 @@
+/(system_ext|system/system_ext)/bin/hyper_bpfloader        u:object_r:bpfloader_exec:s0

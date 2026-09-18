@@ -1,0 +1,9 @@
+// SPDX-License-Identifier: Apache-2.0
+
+cc_library_shared {
+    name: "libcamera_ispinterface_shim",
+    srcs: ["ProducerListener.cpp"],
+    system_ext_specific: true,
+    compile_multilib: "64",
+    shared_libs: ["liblog"],
+}
