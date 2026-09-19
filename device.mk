@@ -161,6 +161,7 @@ PRODUCT_PACKAGES += \
     libstagefright_foundation-v33.vendor \
     libjsoncpp.vendor \
     audio.usb.default \
+    libaudiopreprocessing \
     android.hardware.bluetooth.audio-impl \
     MtkInCallService \
     android.hardware.gnss-V1-ndk \

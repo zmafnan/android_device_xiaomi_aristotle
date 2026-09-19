@@ -3,3 +3,6 @@
 
 # Media Hardware Thumbnail Acceleration
 media.stagefright.thumbnail.prefer_hw_codecs=true
+
+# Audio System
+ro.audio.usb.period_us=16000

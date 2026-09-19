@@ -301,6 +301,8 @@ vendor.audio.spkcal.copy.inhal=true
 vendor.audio.ultrasound.log=0
 vendor.audio.usb.iems.period_us=5000
 vendor.audio.usb.super_hifi=true
+persist.vendor.audio.usb.offload=false
+ro.audio.usb.period_us=16000
 vendor.audio.voice.receiver.status=false
 vendor.audiohal.telephonytx.type=2
 
