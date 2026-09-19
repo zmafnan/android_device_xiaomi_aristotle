@@ -11,6 +11,8 @@
 
 #include <poll.h>
 #include <sys/ioctl.h>
+#include <atomic>
+#include <chrono>
 #include <fstream>
 #include <thread>
 
@@ -98,14 +100,21 @@ class XiaomiMt6895UdfpsHandler : public UdfpsHandler {
                     continue;
                 }
 
+                bool pressed = readBool(fd);
+                if (pressed && mAuthCompleted.load()) {
+                    mDevice->extCmd(mDevice, COMMAND_FOD_PRESS_STATUS, PARAM_FOD_RELEASED);
+                    continue;
+                }
+
                 mDevice->extCmd(mDevice, COMMAND_FOD_PRESS_STATUS,
-                                readBool(fd) ? PARAM_FOD_PRESSED : PARAM_FOD_RELEASED);
+                                pressed ? PARAM_FOD_PRESSED : PARAM_FOD_RELEASED);
             }
         }).detach();
     }
 
     void onFingerDown(uint32_t /*x*/, uint32_t /*y*/, float /*minor*/, float /*major*/) {
         LOG(INFO) << __func__;
+        mAuthCompleted.store(false);
         setFingerDown(true);
     }
 
@@ -119,7 +128,7 @@ class XiaomiMt6895UdfpsHandler : public UdfpsHandler {
         if (static_cast<AcquiredInfo>(result) == AcquiredInfo::GOOD) {
             setFingerDown(false);
             setFodStatus(FOD_STATUS_OFF);
-        } else if (vendorCode == 21 || vendorCode == 22 || vendorCode == 23) {
+        } else if ((vendorCode == 21 || vendorCode == 22 || vendorCode == 23) && !mAuthCompleted.load()) {
             /*
              * vendorCode = 21 waiting for fingerprint authentication
              * vendorCode = 22 finger down / touch detected
@@ -131,16 +140,29 @@ class XiaomiMt6895UdfpsHandler : public UdfpsHandler {
 
     void onAuthenticationSucceeded() {
         LOG(INFO) << __func__;
+        mAuthCompleted.store(true);
         onFingerUp();
+
+        // The display panel may still be mid-wake when auth completes during screen-off / AOD unlock.
+        // Sending LHBM_OFF while the panel is in a wake transition causes the driver to silently
+        // discard the command, leaving the FOD light stuck on.
+        // A 300ms delayed cleanup ensures LHBM_OFF lands on a ready panel and is properly processed.
+        std::thread([this]() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            onFingerUp();
+            setFodStatus(FOD_STATUS_OFF);
+        }).detach();
     }
 
     void onAuthenticationFailed() {
         LOG(INFO) << __func__;
+        mAuthCompleted.store(false);
         onFingerUp();
     }
 
     void cancel() {
         LOG(INFO) << __func__;
+        mAuthCompleted.store(false);
         setFingerDown(false);
         setFodStatus(FOD_STATUS_OFF);
     }
@@ -148,6 +170,7 @@ class XiaomiMt6895UdfpsHandler : public UdfpsHandler {
   private:
     fingerprint_device_t* mDevice;
     android::base::unique_fd touch_fd_;
+    std::atomic<bool> mAuthCompleted{false};
 
     void setFodStatus(int value) {
         int buf[MAX_BUF_SIZE] = {TOUCH_ID, Touch_Fod_Enable, value};
@@ -155,6 +178,11 @@ class XiaomiMt6895UdfpsHandler : public UdfpsHandler {
     }
 
     void setFingerDown(bool pressed) {
+        if (pressed && mAuthCompleted.load()) {
+            LOG(DEBUG) << __func__ << " ignored - auth already completed";
+            return;
+        }
+
         mDevice->extCmd(mDevice, COMMAND_NIT, pressed ? PARAM_NIT_FOD : PARAM_NIT_NONE);
 
         int buf[MAX_BUF_SIZE] = {TOUCH_ID, Touch_Fod_Enable, pressed ? 1 : 0};
@@ -163,6 +191,10 @@ class XiaomiMt6895UdfpsHandler : public UdfpsHandler {
         set(DISP_PARAM_PATH,
             std::string(DISP_PARAM_LOCAL_HBM_MODE) + " " +
                     (pressed ? DISP_PARAM_LOCAL_HBM_ON : DISP_PARAM_LOCAL_HBM_OFF));
+
+        if (!pressed) {
+            setFodStatus(FOD_STATUS_OFF);
+        }
     }
 };
 
