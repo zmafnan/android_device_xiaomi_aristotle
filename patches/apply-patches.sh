@@ -35,6 +35,7 @@ declare -A REPO_MAP=(
     ["packages_apps_Settings"]="packages/apps/Settings"
     ["hardware_mediatek"]="hardware/mediatek"
     ["frameworks_av"]="frameworks/av"
+    ["system_media"]="system/media"
 )
 
 apply_patch() {

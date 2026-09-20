@@ -1,0 +1,15 @@
+diff --git a/alsa_utils/include/alsa_device_profile.h b/alsa_utils/include/alsa_device_profile.h
+index 24b6665..e783e47 100644
+--- a/alsa_utils/include/alsa_device_profile.h
++++ b/alsa_utils/include/alsa_device_profile.h
+@@ -21,9 +21,7 @@
+ #include <system/audio.h>
+ #include <tinyalsa/asoundlib.h>
+ 
+-#define MAX_PROFILE_FORMATS         6  /* We long support the 5 standard formats defined
+-                                        * in asound.h, so we just need this to be 1 more
+-                                        * than that */
++#define MAX_PROFILE_FORMATS         5  /* 4 standard formats + 1 terminator to preserve MTK vendor ABI */
+ #define MAX_PROFILE_SAMPLE_RATES    14 /* this number needs to be 1 more than the number of
+                                         * sample rates in std_sample_rates[]
+                                         * (in alsa_device_profile.c) */
