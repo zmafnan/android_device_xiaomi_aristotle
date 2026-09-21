@@ -7,9 +7,13 @@
 # -----------------------------------------------------------------------------
 persist.vendor.night.charge=true
 persist.vendor.battery.health=true
+persist.vendor.battery.health.optimise=true
 persist.vendor.hightemp.notice=true
 persist.vendor.domain.charge=true
-persist.vendor.smartchg=6
+persist.vendor.accelerate.charge=true
+persist.vendor.extreme.mode=true
+persist.vendor.smartchg=854
+persist.vendor.region.charger=default
 
 # -----------------------------------------------------------------------------
 # Display, Refresh Rate & SurfaceFlinger (144Hz OLED)
