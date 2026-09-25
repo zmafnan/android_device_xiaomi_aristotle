@@ -308,6 +308,12 @@ PRODUCT_PACKAGES += \
     libpcap.vendor \
     libnetutils.vendor
 
+# Display configuration (HBM & Brightness curves)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/display/display_id_4627039422300187648.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_4627039422300187648.xml \
+    $(LOCAL_PATH)/configs/display/display_id_4627039422300187648.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_port_0.xml \
+    $(LOCAL_PATH)/configs/display/display_id_4627039422300187648.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/default.xml
+
 # Fingerprint / UDFPS
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint-service.xiaomi \
