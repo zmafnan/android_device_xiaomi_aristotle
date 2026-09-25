@@ -204,7 +204,5 @@
     <bool name="config_enableWcgMode">true</bool>
 
     <!-- The bounding path of the cutout (center punch-hole camera: 1220x2712 screen) -->
-    <string name="config_mainBuiltInDisplayCutout">M 0,0 H -34 V 115 H 34 V 0 H 0 Z</string>
-    <string name="config_mainBuiltInDisplayCutoutRectApproximation">M 0,0 H -34 V 115 H 34 V 0 H 0 Z</string>
-    <bool name="config_fillMainBuiltInDisplayCutout">true</bool>
+    <string name="config_mainBuiltInDisplayCutout">M 0,0 H -33 V 115 H 33 V 0 H 0 Z</string>
 </resources>
