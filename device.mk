@@ -507,3 +507,8 @@ include $(LOCAL_PATH)/vendor_logtag.mk
 
 # Dolby Atmos (Lunaris AOSP)
 $(call inherit-product-if-exists, vendor/lunaris/dolby/dolby.mk)
+
+# VINTF Kernel Check: Aristotle uses 5.10 GKI kernel with android12-9 uname.
+# Skip OTA kernel requirements check to prevent incompatibility with Android 17 matrices.
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+

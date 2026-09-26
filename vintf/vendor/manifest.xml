@@ -34,7 +34,7 @@
         manifest.xml
         manifest.xml
 -->
-<manifest version="4.0" type="device" target-level="6">
+<manifest version="4.0" type="device" target-level="7">
     <hal format="hidl">
         <name>android.hardware.audio</name>
         <transport>hwbinder</transport>
@@ -579,7 +579,7 @@
         </interface>
         <fqname>@1.0::IMiwillService/default</fqname>
     </hal>
-    <kernel target-level="6"/>
+    <kernel target-level="7"/>
     <hal format="aidl">
         <name>android.hardware.tetheroffload</name>
         <version>1</version>
