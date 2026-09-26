@@ -3,3 +3,5 @@
 # the controller target remains sysfs_usb_nonplat with existing HAL access.
 allow mtk_hal_usb sysfs_udc:dir search;
 allow mtk_hal_usb sysfs_udc:lnk_file read;
+r_dir_file(mtk_hal_usb, sysfs_typec)
+allow mtk_hal_usb sysfs_typec:file rw_file_perms;
