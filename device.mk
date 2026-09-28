@@ -441,6 +441,10 @@ PRODUCT_PACKAGES += \
 
 # Copy Files
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/root/init.recovery.mt6895.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6895.rc \
+    $(LOCAL_PATH)/recovery/root/init.recovery.mt6895.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.aristotle.rc \
+    $(LOCAL_PATH)/recovery/root/init.recovery.mt6895.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.k6895v1_64.rc \
+    $(LOCAL_PATH)/recovery/root/init.recovery.mt6895.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc \
     $(LOCAL_PATH)/rootdir/fstab.mt6895:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.mt6895 \
     $(LOCAL_PATH)/rootdir/fstab.mt6895:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.mt6895 \
     $(LOCAL_PATH)/rootdir/fstab.mt6895:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.mt6895 \
